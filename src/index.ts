@@ -31,7 +31,8 @@ ff.http('SyntheticFunction', runSyntheticHandler(async ({logger, executionId}: {
   const url = 'https://www.retail-ai.jp/';
   let browser: Browser | null = null;
   try {
-    browser = await puppeteer.launch();
+    //browser = await puppeteer.launch();
+    browser = await puppeteer.launch({ executablePath: puppeteer.executablePath() });
     const page: Page = await browser.newPage();
     await page.goto(url);
     const title: string = await page.title();
