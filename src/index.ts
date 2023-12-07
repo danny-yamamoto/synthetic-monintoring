@@ -20,6 +20,7 @@ import * as ff from '@google-cloud/functions-framework';
 import axios from 'axios';
 import assert from 'node:assert';
 import {Logger} from 'winston';
+import puppeteer, { Browser, Page } from 'puppeteer';
 
 ff.http('SyntheticFunction', runSyntheticHandler(async ({logger, executionId}: {logger: Logger, executionId: string|undefined}) => {
   /*
@@ -27,9 +28,23 @@ ff.http('SyntheticFunction', runSyntheticHandler(async ({logger, executionId}: {
    * If the code runs without errors, the synthetic test is considered successful.
    * If an error is thrown during execution, the synthetic test is considered failed.
    */
+  const url = 'https://www.retail-ai.jp/';
+  let browser: Browser | null = null;
+  try {
+    browser = await puppeteer.launch();
+    const page: Page = await browser.newPage();
+    await page.goto(url);
+    const title: string = await page.title();
+    console.log(`Page title is: ${title}`);
+  } catch (error) {
+    console.error(`Error navigating to ${url}:`, error);
+  } finally {
+    if (browser !== null) {
+      await browser.close();
+    }
+  }
   logger.info('Making an http request using synthetics, with execution id: ' + executionId);
   //const url = 'https://www.google.com/'; // URL to send the request to
-  const url = 'https://www.retail-ai.jp/';
   return await assert.doesNotReject(axios.get(url));
 }));
 
