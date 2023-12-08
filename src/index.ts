@@ -22,7 +22,7 @@ import assert from 'node:assert';
 import {Logger} from 'winston';
 import puppeteer, { Browser, Page } from 'puppeteer';
 
-ff.http('SyntheticFunction', runSyntheticHandler(async ({logger, executionId}: {logger: Logger, executionId: string|undefined}) => {
+ff.http('CustomPuppeteerSynthetic', runSyntheticHandler(async ({logger, executionId}: {logger: Logger, executionId: string|undefined}) => {
   /*
    * This function executes the synthetic code for testing purposes.
    * If the code runs without errors, the synthetic test is considered successful.
@@ -32,9 +32,9 @@ ff.http('SyntheticFunction', runSyntheticHandler(async ({logger, executionId}: {
   let browser: Browser | null = null;
   try {
     //browser = await puppeteer.launch();
-    browser = await puppeteer.launch({ executablePath: puppeteer.executablePath() });
+    browser = await puppeteer.launch({ headless: true, timeout: 30000});
     const page: Page = await browser.newPage();
-    await page.goto(url);
+    await page.goto(url, {waitUntil: 'load'});
     const title: string = await page.title();
     console.log(`Page title is: ${title}`);
   } catch (error) {
