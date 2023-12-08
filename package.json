@@ -17,7 +17,7 @@
     "build": "tsc",
     "start": "functions-framework --target=SyntheticFunction",
     "prestart": "npm run build",
-    "gcp-build": "node node_modules/puppeteer/install.mjs",
+    "gcp-build": "node node_modules/puppeteer/install.mjs && npm run build && node dist/index.js",
     "local": "npm run build && node dist/index.js"
   },
   "author": "",
