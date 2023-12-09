@@ -1,28 +1,17 @@
 {
-  "dependencies": {
-    "@google-cloud/functions-framework": "^3.3.0",
-    "@google-cloud/synthetics-sdk-api": "^0.5.0",
-    "@types/puppeteer": "^7.0.4",
-    "axios": "^1.6.2",
-    "node-fetch": "^3.3.2",
-    "puppeteer": "^21.6.0",
-    "puppeteer-core": "^21.6.0",
-    "winston": "^3.11.0"
-  },
-  "name": "synthetic-monintoring",
-  "description": "Verify synthetic monitor.",
+  "name": "generic-puppeteer-nodejs",
   "version": "1.0.0",
-  "main": "dist/index.js",
+  "description": "",
+  "main": "index.js",
   "scripts": {
-    "build": "tsc",
-    "start": "functions-framework --target=SyntheticFunction",
-    "prestart": "npm run build",
-    "gcp-build": "npx puppeteer browsers install chrome && npm run build && node dist/index.js",
-    "local": "npm run build && node dist/index.js"
+    "gcp-build": "node node_modules/puppeteer/install.mjs"
   },
-  "author": "",
-  "license": "ISC",
-  "devDependencies": {
-    "typescript": "^5.3.3"
-  }
+  "dependencies": {
+      "@google-cloud/functions-framework": "^3.1.2",
+      "@google-cloud/synthetics-sdk-api": "^0.4.1",
+      "axios": "^1.5.0",
+      "puppeteer": "^21.3.6"
+  },
+  "license": "Apache-2.0",
+  "author": "Google Inc."
 }
