@@ -29,25 +29,26 @@ functions.http('CustomPuppeteerSynthetic', runSyntheticHandler(async ({logger, e
   * If an error is thrown during execution, the synthetic test is considered failed.
   */
 
- // Launch a headless Chrome browser and open a new page
- const browser = await puppeteer.launch({ headless: 'new', timeout: 0});
- const page = await browser.newPage();
+    // Launch a headless Chrome browser and open a new page
+    const browser = await puppeteer.launch({ headless: 'new', timeout: 0});
+    const page = await browser.newPage();
 
- // Navigate to the target URL
- const start = performance.now();
- const result = await page.goto('https://www.retail-ai.jp/', {waitUntil: 'load'});
- const end = performance.now();
- logger.info(`Page load time for ${url}: ${(end - start).toFixed(2)} milliseconds`);
+    // Navigate to the target URL
+    const start = performance.now();
+    const url = "https://www.retail-ai.jp/";
+    const result = await page.goto(url, {waitUntil: 'load'});
+    const end = performance.now();
+    logger.info(`Page load time for ${url}: ${(end - start).toFixed(2)} milliseconds`);
 
- // Confirm successful navigation
- await assert.equal(result.status(), 200);
+    // Confirm successful navigation
+    await assert.equal(result.status(), 200);
 
- // Print the page title to the console
- const title = await page.title();
- logger.info(`My Page title: ${title} ` + executionId);
+    // Print the page title to the console
+    const title = await page.title();
+    logger.info(`My Page title: ${title} ` + executionId);
 
- // Close the browser
- await browser.close();
+    // Close the browser
+    await browser.close();
 }));
 
 // [START monitoring_synthetic_monitoring_custom_puppeteer_script]
