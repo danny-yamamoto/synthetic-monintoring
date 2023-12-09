@@ -23,11 +23,6 @@ const puppeteer = require('puppeteer');
 
 
 functions.http('CustomPuppeteerSynthetic', runSyntheticHandler(async ({logger, executionId}) => {
- /*
-  * This function executes the synthetic code for testing purposes.
-  * If the code runs without errors, the synthetic test is considered successful.
-  * If an error is thrown during execution, the synthetic test is considered failed.
-  */
 
     // Launch a headless Chrome browser and open a new page
     const browser = await puppeteer.launch({ headless: 'new', timeout: 0});
